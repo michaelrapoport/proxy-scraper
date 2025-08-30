@@ -2,14 +2,15 @@ import httpx
 from bs4 import BeautifulSoup
 from playwright.async_api import async_playwright
 import re
+from typing import List
 
-async def scrape_proxyscrape(url):
+async def scrape_proxyscrape(url: str) -> List[str]:
     """Scrapes proxies from proxyscrape.com."""
     proxies = set()
     try:
         async with httpx.AsyncClient() as client:
             response = await client.get(url, timeout=10)
-            response.raise_for_status() # raise exception for bad status codes
+            response.raise_for_status()  # raise exception for bad status codes
 
         soup = BeautifulSoup(response.text, 'html.parser')
         # In proxyscrape, the proxies are in a textarea, so we need to find that
@@ -23,7 +24,7 @@ async def scrape_proxyscrape(url):
     return list(proxies)
 
 
-async def scrape_spys_one(url):
+async def scrape_spys_one(url: str) -> List[str]:
     """Scrapes proxies from spys.one."""
     proxies = set()
     try:
@@ -52,7 +53,7 @@ async def scrape_spys_one(url):
 
     return list(proxies)
 
-async def scrape_generic(url):
+async def scrape_generic(url: str) -> List[str]:
     """A generic scraper that looks for IP:port patterns."""
     proxies = set()
     try:

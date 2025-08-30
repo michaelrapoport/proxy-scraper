@@ -1,7 +1,7 @@
 import httpx
 import asyncio
 
-async def test_proxy(proxy):
+async def test_proxy(proxy: str) -> bool:
     """Tests a single SOCKS5 proxy."""
     test_url = 'https://www.google.com'
     try:
