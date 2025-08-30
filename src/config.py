@@ -35,10 +35,14 @@ PROXY_URLS = [
         "socks5.txt"
     ),
     (
-        "https://raw.githubusercontent.com/Zaeem20/FREE_PROXIES_LIST/"
-        "master/socks5.txt"
+        "https"
+        "://raw.githubusercontent.com/Zaeem20/FREE_PROXIES_LIST/master/"
+        "socks5.txt"
     ),
     (
         "https://spys.one/en/socks-proxy-list/"
+    ),
+    (
+        "https://www.freeproxylists.net/"
     ),
 ]

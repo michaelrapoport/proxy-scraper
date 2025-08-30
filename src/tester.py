@@ -1,4 +1,5 @@
 """This module contains a function for testing and geolocating SOCKS5 proxies."""
+import logging
 import re
 from typing import Any
 import httpx
@@ -9,30 +10,24 @@ async def test_proxy(proxy: str) -> dict[str, Any] | None:
     Tests a single SOCKS5 proxy. If it's working, geolocates it.
     Returns a dictionary with proxy and location info if successful, otherwise None.
     """
-    # Validate proxy format before testing
     if not re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{2,5}$", proxy):
+        logging.warning("Invalid proxy format: %s", proxy)
         return None
 
-    test_urls = ["https://www.google.com", "https://www.cloudflare.com"]
+    test_url = "https://www.google.com"
     geolocation_url = "http://ip-api.com/json/"
-
     proxies_dict = {"all://": f"socks5://{proxy}"}
 
     try:
-        async with httpx.AsyncClient(proxies=proxies_dict, timeout=10) as client:
-            # 1. Test general connectivity
-            test_success = False
-            for url in test_urls:
-                try:
-                    response = await client.get(url)
-                    response.raise_for_status()
-                    test_success = True
-                    break  # Exit loop on first successful connection
-                except (httpx.RequestError, httpx.HTTPStatusError):
-                    continue  # Try the next URL
-
-            if not test_success:
-                return None  # Proxy is not working
+        async with httpx.AsyncClient(proxies=proxies_dict, timeout=7) as client:
+            # 1. Test connectivity
+            try:
+                response = await client.get(test_url)
+                response.raise_for_status()
+                logging.info("Proxy %s is working.", proxy)
+            except (httpx.RequestError, httpx.HTTPStatusError) as e:
+                logging.warning("Proxy %s failed connectivity test: %s", proxy, e)
+                return None
 
             # 2. Geolocate the proxy
             proxy_info: dict[str, Any] = {"proxy": proxy}
@@ -46,16 +41,14 @@ async def test_proxy(proxy: str) -> dict[str, Any] | None:
                         "city": data.get("city"),
                         "isp": data.get("isp"),
                     })
-            except (httpx.RequestError, httpx.HTTPStatusError, ValueError):
-                # Geolocation failed, but the proxy works. Add placeholder data.
-                proxy_info.update({
-                    "country": "Unknown",
-                    "city": "Unknown",
-                    "isp": "Unknown",
-                })
+                else:
+                    proxy_info.update({"country": "Geo-lookup failed"})
+            except (httpx.RequestError, httpx.HTTPStatusError, ValueError) as e:
+                logging.warning("Geolocation failed for %s: %s", proxy, e)
+                proxy_info.update({"country": "Geolocation error"})
 
             return proxy_info
 
-    except Exception:
-        # Catch any other exception during client setup or requests
+    except Exception as e:
+        logging.error("Unexpected error testing proxy %s: %s", proxy, e)
         return None

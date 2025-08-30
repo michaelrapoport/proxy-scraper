@@ -12,6 +12,10 @@ if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
 
 
+class ProxyProcessingError(Exception):
+    """Custom exception for errors during proxy processing."""
+
+
 async def fetch_and_test_proxies(
     scraping_funcs: list[Callable[[str], Awaitable[list[str]]]],
     urls: list[str],

@@ -67,6 +67,29 @@ async def scrape_spys_one(url: str) -> list[str]:
     return list(proxies)
 
 
+async def scrape_freeproxylist(url: str) -> list[str]:
+    """Scrapes proxies from free-proxy-list.net."""
+    proxies: set[str] = set()
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url, timeout=10)
+            response.raise_for_status()
+
+        soup = BeautifulSoup(response.text, "lxml")
+        table = soup.find("table", class_="table-striped")
+        if table:
+            for row in table.find_all("tr"):
+                cells = row.find_all("td")
+                if len(cells) > 1:
+                    ip = cells[0].text
+                    port = cells[1].text
+                    proxies.add(f"{ip}:{port}")
+    except (httpx.RequestError, httpx.HTTPStatusError) as e:
+        print(f"Error scraping {url}: {e}")
+
+    return list(proxies)
+
+
 async def scrape_generic(url: str) -> list[str]:
     """A generic scraper that looks for IP:port patterns."""
     proxies: set[str] = set()

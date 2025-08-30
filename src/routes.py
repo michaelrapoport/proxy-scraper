@@ -7,7 +7,7 @@ from typing import Awaitable, Callable, Any
 
 from flask import Blueprint, jsonify, render_template
 
-from src import config, scraper
+from src import config, scraper, llm_scraper
 from src.core import fetch_and_test_proxies, ProxyProcessingError
 from src.cache import cache
 
@@ -37,6 +37,7 @@ def get_proxies():
         scraper.scrape_proxyscrape,
         scraper.scrape_spys_one,
         scraper.scrape_generic,
+        llm_scraper.agent_scraper,  # Add the agentic scraper here
     ]
 
     try:
