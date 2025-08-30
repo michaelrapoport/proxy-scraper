@@ -1,0 +1,17 @@
+URLS = [
+    "https://spys.one/en/socks-proxy-list/",
+    "https://proxyscrape.com/free-proxy-list",
+    "https://advanced.name/freeproxy?type=socks5",
+    "https://www.freeproxy.world/?type=socks5",
+    "https://www.webshare.io/features/free-proxy",
+    "https://sockslist.us/",
+    "https://proxybros.com/free-proxy-list/socks5/",
+    "https://github.com/proxifly/free-proxy-list",
+    "https://geonode.com/free-proxy-list",
+    "https://proxydb.net/",
+    "https://hide.mn/en/proxy-list/",
+    "https://iproyal.com/free-proxy-list/",
+    "https://github.com/topics/proxy-list",
+    "https://www.anonymous-proxies.net/",
+    "https://proxysocks5.com/",
+]

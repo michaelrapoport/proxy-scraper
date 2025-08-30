@@ -1,0 +1,4 @@
+Flask
+httpx[socks]
+beautifulsoup4
+playwright
