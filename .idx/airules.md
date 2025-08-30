@@ -54,3 +54,26 @@ When providing assistance, assume this environment is set up. Remind the user to
 - Break down complex tasks, like setting up a task queue or configuring authentication, into smaller, manageable steps.
 - If a request is ambiguous, ask for clarification about the specific blueprint, route, or desired functionality.
 - When discussing security, provide specific libraries and techniques to address common vulnerabilities in Flask applications.
+
+[imports]
+order = "standard-library,third-party,local"
+blank_lines_after_imports = 2
+
+[formatting]
+max_line_length = 79
+blank_lines_around_top_level = 2
+
+[error_handling]
+disallow_broad_exceptions = true
+require_specific_httpx_errors = true
+
+[patterns]
+require_centralized_regex = true
+disallow_duplicate_patterns = true
+
+[types]
+require_return_type_hints = true
+require_argument_type_hints = true
+
+[playwright]
+max_navigation_timeout = 30000

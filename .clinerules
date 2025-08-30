@@ -1,0 +1,29 @@
+Code Formatting:
+
+Follow PEP 8 guidelines for Python code formatting.
+Use consistent indentation (4 spaces).
+Limit lines to 79 characters where possible.
+Error Handling:
+
+Use specific exception handling instead of general exceptions.
+Log errors with appropriate severity levels.
+Imports:
+
+Remove unused imports.
+Use relative imports correctly.
+Type Checking:
+
+Use type annotations for function parameters and return types.
+Ensure type compatibility in assignments.
+Code Organization:
+
+Organize code into logical modules and functions.
+Avoid duplicate code.
+Logging:
+
+Use logging mechanisms instead of print statements.
+Use appropriate logging levels (info, warning, error).
+Code Review:
+
+Regularly review code for adherence to these rules.
+Use linters and type checkers to identify issues.

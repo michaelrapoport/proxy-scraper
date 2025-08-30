@@ -2,3 +2,7 @@ Flask[async]
 httpx[socks]
 beautifulsoup4
 playwright
+lxml
+gunicorn
+python-dotenv
+Flask-Caching

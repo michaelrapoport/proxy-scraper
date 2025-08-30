@@ -1,0 +1,25 @@
+# AI Coding Assistant Guidelines
+# Last Updated: 2025-08-30
+
+[imports]
+order = "standard-library,third-party,local"
+blank_lines_after_imports = 2
+
+[formatting]
+max_line_length = 79
+blank_lines_around_top_level = 2
+
+[error_handling]
+disallow_broad_exceptions = true
+require_specific_httpx_errors = true
+
+[patterns]
+require_centralized_regex = true
+disallow_duplicate_patterns = true
+
+[types]
+require_return_type_hints = true
+require_argument_type_hints = true
+
+[playwright]
+max_navigation_timeout = 30000
